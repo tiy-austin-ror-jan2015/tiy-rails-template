@@ -3,6 +3,8 @@ def get(prompt)
   yes?(prompt + ' (y/n) >')
 end
 
+PUTS "DOES THIS WORK????"
+
 #heroku gems
 gem 'puma'
 gem 'rails_12factor'
