@@ -54,3 +54,6 @@ after_bundle do
     end
   end
 end
+puts
+puts 'Complete! Your new rails app is finished and ready to go'
+puts
