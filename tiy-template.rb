@@ -1,15 +1,17 @@
-VERSION = 'v1.0.6'
+VERSION = 'v1.1.0'
 def get(prompt)
   yes?(prompt + ' (y/n) >')
 end
-
 
 #heroku gems
 gem 'puma'
 gem 'rails_12factor'
 #
+puts 'Creating Procfile'
+file 'Procfile',<<-CODE
+  web: bundle exec puma -t 5:5 -p ${PORT:-3000} -e ${RACK_ENV:-development}
+CODE
 
-gem 'bootstrap-sass'
 
 gem_group :test, :development do
   gem 'faker'
@@ -20,19 +22,26 @@ gem_group :test, :development do
   end
 end
 
+gem 'bootstrap-sass'
+
 if get('Would you like to use Simple Form?')
   gem 'simple_form'
   generate('simple_form:install --bootstrap')
 end
 
 puts 'Creating application.scss'
+
 file 'app/assets/stylesheets/application.scss', <<-CODE
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 CODE
+
 puts 'Linking to bootstrap files'
+
 run 'rm app/assest/stylesheets/application.css'
+
 puts 'Removing old application.css file'
+
 
 after_bundle do
   if get('Would you like to create a new git repo and add everything to it?')
