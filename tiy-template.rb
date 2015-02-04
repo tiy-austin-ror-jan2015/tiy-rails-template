@@ -38,7 +38,7 @@ CODE
 
 puts 'Linking to bootstrap files'
 
-run 'rm app/assest/stylesheets/application.css'
+run 'rm app/assets/stylesheets/application.css'
 
 puts 'Removing old application.css file'
 
