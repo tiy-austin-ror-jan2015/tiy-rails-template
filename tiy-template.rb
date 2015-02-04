@@ -1,4 +1,4 @@
-VERSION = 'v1.0.5'
+VERSION = 'v1.0.6'
 def get(prompt)
   yes?(prompt + ' (y/n) >')
 end
@@ -53,6 +53,7 @@ after_bundle do
       end
     end
   end
+  rake('db:create') if get('Would you like to create your db with `rake db:create`')
+  yes?('Complete! Your new rails app is finished and ready to go')
 end
-rake('db:create') if get('Would you like to create your db with `rake db:create`')
-yes?('Complete! Your new rails app is finished and ready to go')
+
