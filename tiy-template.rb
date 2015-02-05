@@ -9,7 +9,6 @@ def ask(prompt)
     <<-CODE
     Ruby 'version'
     CODE
-  end
 end
 
 #heroku gems
