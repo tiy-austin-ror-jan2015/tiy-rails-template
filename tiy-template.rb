@@ -1,25 +1,13 @@
-VERSION = 'v1.3.0'
+VERSION = 'v1.2.0'
 def get(prompt)
   yes?(prompt + ' (y/n) >')
 end
 
-def ask(prompt)
-  version = gets.chomp
-  inject_into_file 'Gemfile', after: 'source 'https://rubygems.org'' do
-    <<-CODE
-    Ruby 'version'
-    CODE
-  end
-end
 
 #heroku gems
 gem 'puma'
 gem 'rails_12factor'
 #
-
-#declaring Ruby Version
-
-ask('Enter your ruby version number.')
 
 
 puts 'Creating Procfile'
