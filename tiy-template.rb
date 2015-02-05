@@ -5,10 +5,11 @@ end
 
 def ask(prompt)
   version = gets.chomp
-  inject_into_file 'Gemfile', after: 'source 'https://rubygems.org'\n' do
+  inject_into_file 'Gemfile', after: 'source 'https://rubygems.org'' do
     <<-CODE
     Ruby 'version'
     CODE
+  end
 end
 
 #heroku gems
