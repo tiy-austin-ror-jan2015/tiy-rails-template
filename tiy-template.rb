@@ -1,4 +1,4 @@
-VERSION = 'v1.1.1'
+VERSION = 'v1.2.0'
 def get(prompt)
   yes?(prompt + ' (y/n) >')
 end
