@@ -25,43 +25,70 @@ gem_group :test, :development do
   end
 end
 
-gem 'bootstrap-sass'
+if get('Would you like to use Bootstrap?')
+  gem 'bootstrap-sass'
 
-if get('Would you like to use Simple Form?')
-  gem 'simple_form'
-  generate('simple_form:install --bootstrap')
+    if get('Would you like to use Simple Form?')
+      gem 'simple_form'
+      generate('simple_form:install --bootstrap')
+    end
+
+  puts 'Creating application.scss'
+
+  file 'app/assets/stylesheets/application.scss', <<-CODE
+  @import 'bootstrap-sprockets';
+  @import 'bootstrap';
+  CODE
+
+  puts 'Linking to bootstrap files'
+
+  run 'rm app/assets/stylesheets/application.css'
+
+  puts 'Removing old application.css file'
+
+  puts 'Removing old application.js file'
+
+  run 'rm app/assets/javascripts/application.js'
+
+  puts 'Creating application.js'
+
+  file 'app/assets/javascripts/application.js', <<-CODE
+  //= require jquery
+  //= require bootstrap-sprockets
+  //= require jquery_ujs
+  //= require turbolinks
+  //= require_tree .
+  CODE
+
+  puts 'Adding bootstrap-sprockets to require'
 end
 
-puts 'Creating application.scss'
 
-file 'app/assets/stylesheets/application.scss', <<-CODE
-@import 'bootstrap-sprockets';
-@import 'bootstrap';
-CODE
+if get('Would you like to use Bourbon?')
+  gem 'bourbon'
+  gem 'neat'
+  gem 'bitters'
+  if get('Would you like to use Simple Form?')
+    gem 'simple_form'
+    generate('simple_form:install')
+  end
 
-puts 'Linking to bootstrap files'
+  puts 'Creating application.scss'
 
-run 'rm app/assets/stylesheets/application.css'
+  file 'app/assets/stylesheets/application.scss', <<-CODE
+  @import 'bourbon';
+  @import 'base/base';
+  @import 'neat';
+  CODE
 
-puts 'Removing old application.css file'
+  puts 'Removing old application.css'
 
-puts 'Removing old application.js file'
+  run 'rm app/assets/stylesheets/application.css'
 
-run 'rm app/assets/javascripts/application.js'
+  puts 'Installing Bitters library'
 
-puts 'Creating application.js'
-
-file 'app/assets/javascripts/application.js', <<-CODE
-//= require jquery
-//= require bootstrap-sprockets
-//= require jquery_ujs
-//= require turbolinks
-//= require_tree .
-CODE
-
-puts 'Adding bootstrap-sprockets to require'
-
-
+  inside(dir='app/assets/stylesheets' run bitters install)
+end
 
 
 after_bundle do
@@ -86,6 +113,7 @@ after_bundle do
   if get('Would you like to create a new Heroku repo?')
       run('heroku create')
   end
+
 
 
   if get('Would you like to push your repo to Heroku')
