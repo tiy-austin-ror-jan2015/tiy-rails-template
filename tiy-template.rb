@@ -93,7 +93,7 @@ if get('Would you like to use Bourbon?')
 
   puts 'Uncommenting @import grid-settings'
 
-  uncomment_lines('app/assets/stylesheets/_base', '@import "grid-settings";')
+  uncomment_lines('app/assets/stylesheets/_base', (\w+@import))
 end
 
 
