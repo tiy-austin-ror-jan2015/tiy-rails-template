@@ -1,4 +1,4 @@
-VERSION = 'v1.2.0'
+VERSION = 'v1.3.0'
 def get(prompt)
   yes?(prompt + ' (y/n) >')
 end
@@ -87,7 +87,7 @@ if get('Would you like to use Bourbon?')
 
   puts 'Installing Bitters library'
 
-  inside(dir='app/assets/stylesheets', run bitters install)
+  inside(dir='app/assets/stylesheets', config={run bitters install})
 end
 
 
