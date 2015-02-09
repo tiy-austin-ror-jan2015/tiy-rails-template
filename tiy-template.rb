@@ -1,12 +1,15 @@
-VERSION = 'v1.1.1'
+VERSION = 'v1.2.0'
 def get(prompt)
   yes?(prompt + ' (y/n) >')
 end
+
 
 #heroku gems
 gem 'puma'
 gem 'rails_12factor'
 #
+
+
 puts 'Creating Procfile'
 file 'Procfile',<<-CODE
   web: bundle exec puma -t 5:5 -p ${PORT:-3000} -e ${RACK_ENV:-development}
@@ -42,6 +45,24 @@ run 'rm app/assets/stylesheets/application.css'
 
 puts 'Removing old application.css file'
 
+puts 'Removing old application.js file'
+
+run 'rm app/assets/javascripts/application.js'
+
+puts 'Creating application.js'
+
+file 'app/assets/javascripts/application.js', <<-CODE
+//= require jquery
+//= require bootstrap-sprockets
+//= require jquery_ujs
+//= require turbolinks
+//= require_tree .
+CODE
+
+puts 'Adding bootstrap-sprockets to require'
+
+
+
 
 after_bundle do
   if get('Would you like to create a new git repo and add everything to it?')
@@ -62,6 +83,17 @@ after_bundle do
       end
     end
   end
+  if get('Would you like to create a new Heroku repo?')
+      run('heroku create')
+  end
+
+
+  if get('Would you like to push your repo to Heroku')
+      git push: 'heroku master'
+      run('heroku run rake db:migrate')
+  end
+
+
   rake('db:create') if get('Would you like to create your db with `rake db:create`')
   yes?('Complete! Your new rails app is finished and ready to go')
 end
