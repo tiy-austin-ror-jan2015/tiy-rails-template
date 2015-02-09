@@ -87,7 +87,7 @@ if get('Would you like to use Bourbon?')
 
   puts 'Installing Bitters library'
 
-  inside(dir='app/assets/stylesheets' run bitters install)
+  inside(dir='app/assets/stylesheets', run bitters install)
 end
 
 
