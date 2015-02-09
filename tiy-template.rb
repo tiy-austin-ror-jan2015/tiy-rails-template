@@ -90,6 +90,10 @@ if get('Would you like to use Bourbon?')
   inside('app/assets/stylesheets') do
     run('bitters install')
   end
+
+  puts 'Uncommenting @import grid-settings'
+
+  uncomment_lines('app/assets/stylesheets/_base', '@import "grid-settings";')
 end
 
 
