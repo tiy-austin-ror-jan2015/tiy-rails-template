@@ -91,7 +91,21 @@ if get('Would you like to use Bourbon?')
     run('bitters install')
   end
 
-  uncomment_lines('app/assets/stylesheets/base/_base.scss', '@import grid-settings')
+  puts 'Removing old _base.scss'
+
+  run 'rm app/assets/stylesheets/base/_base.scss'
+
+  puts 'Creating _base.scss'
+
+  file 'app/assets/stylesheets/base/_base.scss', <<-CODE
+  @import "variables";
+  @import "grid-settings";
+  @import "buttons";
+  @import "forms";
+  @import "lists";
+  @import "tables";
+  @import "typography";
+  CODE
 end
 
 
