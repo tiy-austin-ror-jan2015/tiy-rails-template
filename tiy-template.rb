@@ -26,7 +26,8 @@ end
 
 if get('Would you like to use either Bootstrap or Bourbon?')
   ask("What would you like to use?", :limited_to => ['bootstrap','bourbon','none'])
-  if 'bootstrap'
+  case
+    when 'bootstrap'
       gem 'bootstrap-sass'
 
         if get('Would you like to use Simple Form?')
@@ -64,7 +65,7 @@ if get('Would you like to use either Bootstrap or Bourbon?')
       puts 'Adding bootstrap-sprockets to require'
 
 
-  elsif 'bourbon'
+  when 'bourbon'
 
     gem 'bourbon'
     gem 'neat'
@@ -108,8 +109,11 @@ if get('Would you like to use either Bootstrap or Bourbon?')
     @import "typography";
     CODE
 
-  else 'none'
+  when 'none'
     'Nevermind then.'
+
+  else
+    
   end
 
 end
