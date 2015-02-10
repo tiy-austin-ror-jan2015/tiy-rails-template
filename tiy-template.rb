@@ -1,4 +1,4 @@
-VERSION = 'v1.4.0'
+VERSION = 'v1.5.0'
 def get(prompt)
   yes?(prompt + ' (y/n) >')
 end
@@ -10,6 +10,9 @@ gem 'rails_12factor'
 
 #Figaro
 gem 'figaro'
+
+#Devise
+gem 'devise'
 
 #Procfile
 puts 'Creating Procfile'
@@ -47,13 +50,13 @@ if get('Would you like to use either Bootstrap or Bourbon?')
 
     puts 'Linking to bootstrap files'
 
-    run 'rm app/assets/stylesheets/application.css'
+    run('rm app/assets/stylesheets/application.css')
 
     puts 'Removing old application.css file'
 
     puts 'Removing old application.js file'
 
-    run 'rm app/assets/javascripts/application.js'
+    run('rm app/assets/javascripts/application.js')
 
     puts 'Creating application.js'
 
@@ -88,7 +91,7 @@ if get('Would you like to use either Bootstrap or Bourbon?')
 
     puts 'Removing old application.css'
 
-    run 'rm app/assets/stylesheets/application.css'
+    run('rm app/assets/stylesheets/application.css')
 
     puts 'Installing Bitters library'
 
@@ -98,7 +101,7 @@ if get('Would you like to use either Bootstrap or Bourbon?')
 
     puts 'Removing old _base.scss'
 
-    run 'rm app/assets/stylesheets/base/_base.scss'
+    run('rm app/assets/stylesheets/base/_base.scss')
 
     puts 'Creating _base.scss'
 
@@ -135,8 +138,9 @@ after_bundle do
     end
   end
 
+
   puts 'Installing Figaro'
-  run 'figaro install'
+  run('figaro install')
 
 #Heroku
   if get('Would you like to create a new Heroku repo?')
@@ -153,6 +157,7 @@ after_bundle do
   rake('db:create') if get('Would you like to create your db with `rake db:create`')
   yes?('Remember to declare your ruby version in your gem file.')
   yes?('You need to run the command figaro heroku:set -e production, when using heroku.')
+  yes?('devise gem is installed, but you still need to run rails generate devise:install')
   yes?('Complete! Your new rails app is finished and ready to go!')
 end
 
