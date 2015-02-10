@@ -1,4 +1,4 @@
-VERSION = 'v1.4.0'
+VERSION = 'v1.5.0'
 def get(prompt)
   yes?(prompt + ' (y/n) >')
 end
@@ -10,6 +10,9 @@ gem 'rails_12factor'
 
 #Figaro
 gem 'figaro'
+
+#Devise
+gem 'devise'
 
 #Procfile
 puts 'Creating Procfile'
@@ -134,6 +137,9 @@ after_bundle do
       end
     end
   end
+
+  puts 'Running Devise Generator'
+  run 'rails generate devise:install'
 
   puts 'Installing Figaro'
   run 'figaro install'
