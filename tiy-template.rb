@@ -25,91 +25,91 @@ gem_group :test, :development do
 end
 
 if get('Would you like to use either Bootstrap or Bourbon?')
-  if yes?('Use Bootstrap?')
+  if get('Use Bootstrap?')
 
-  if true
-      gem 'bootstrap-sass'
+    if true
+        gem 'bootstrap-sass'
 
-        if get('Would you like to use Simple Form?')
-          gem 'simple_form'
-          generate('simple_form:install --bootstrap')
-        end
+          if get('Would you like to use Simple Form?')
+            gem 'simple_form'
+            generate('simple_form:install --bootstrap')
+          end
+
+        puts 'Creating application.scss'
+
+        file 'app/assets/stylesheets/application.scss', <<-CODE
+        @import 'bootstrap-sprockets';
+        @import 'bootstrap';
+        CODE
+
+        puts 'Linking to bootstrap files'
+
+        run 'rm app/assets/stylesheets/application.css'
+
+        puts 'Removing old application.css file'
+
+        puts 'Removing old application.js file'
+
+        run 'rm app/assets/javascripts/application.js'
+
+        puts 'Creating application.js'
+
+        file 'app/assets/javascripts/application.js', <<-CODE
+        //= require jquery
+        //= require bootstrap-sprockets
+        //= require jquery_ujs
+        //= require turbolinks
+        //= require_tree .
+        CODE
+
+        puts 'Adding bootstrap-sprockets to require'
+
+
+    else
+
+      gem 'bourbon'
+      gem 'neat'
+      gem 'bitters'
+      if get('Would you like to use Simple Form?')
+        gem 'simple_form'
+        generate('simple_form:install')
+      end
 
       puts 'Creating application.scss'
 
       file 'app/assets/stylesheets/application.scss', <<-CODE
-      @import 'bootstrap-sprockets';
-      @import 'bootstrap';
+      @import 'bourbon';
+      @import 'base/base';
+      @import 'neat';
       CODE
 
-      puts 'Linking to bootstrap files'
+      puts 'Removing old application.css'
 
       run 'rm app/assets/stylesheets/application.css'
 
-      puts 'Removing old application.css file'
+      puts 'Installing Bitters library'
 
-      puts 'Removing old application.js file'
+      inside('app/assets/stylesheets') do
+        run('bitters install')
+      end
 
-      run 'rm app/assets/javascripts/application.js'
+      puts 'Removing old _base.scss'
 
-      puts 'Creating application.js'
+      run 'rm app/assets/stylesheets/base/_base.scss'
 
-      file 'app/assets/javascripts/application.js', <<-CODE
-      //= require jquery
-      //= require bootstrap-sprockets
-      //= require jquery_ujs
-      //= require turbolinks
-      //= require_tree .
+      puts 'Creating _base.scss'
+
+      file 'app/assets/stylesheets/base/_base.scss', <<-CODE
+      @import "variables";
+      @import "grid-settings";
+      @import "buttons";
+      @import "forms";
+      @import "lists";
+      @import "tables";
+      @import "typography";
       CODE
 
-      puts 'Adding bootstrap-sprockets to require'
-
-
-  else
-
-    gem 'bourbon'
-    gem 'neat'
-    gem 'bitters'
-    if get('Would you like to use Simple Form?')
-      gem 'simple_form'
-      generate('simple_form:install')
-    end
-
-    puts 'Creating application.scss'
-
-    file 'app/assets/stylesheets/application.scss', <<-CODE
-    @import 'bourbon';
-    @import 'base/base';
-    @import 'neat';
-    CODE
-
-    puts 'Removing old application.css'
-
-    run 'rm app/assets/stylesheets/application.css'
-
-    puts 'Installing Bitters library'
-
-    inside('app/assets/stylesheets') do
-      run('bitters install')
-    end
-
-    puts 'Removing old _base.scss'
-
-    run 'rm app/assets/stylesheets/base/_base.scss'
-
-    puts 'Creating _base.scss'
-
-    file 'app/assets/stylesheets/base/_base.scss', <<-CODE
-    @import "variables";
-    @import "grid-settings";
-    @import "buttons";
-    @import "forms";
-    @import "lists";
-    @import "tables";
-    @import "typography";
-    CODE
-
-
+  end
 end
 
 
