@@ -25,10 +25,10 @@ gem_group :test, :development do
 end
 
 if get('Would you like to use either Bootstrap or Bourbon?')
-  ask("What would you like to use?")
-  if ask.downcase == 'bootstrap'
+  ask("What would you like to use?", :limited_to => ['bootstrap','bourbon','none'])
+  if response == 'bootstrap'
     bootstrap
-  elsif ask.downcase == 'bourbon'
+  elsif response == 'bourbon'
     bourbon
   else
     'Nevermind then.'
