@@ -11,11 +11,6 @@ gem 'rails_12factor'
 #Figaro
 gem 'figaro'
 
-puts 'Installing Figaro'
-
-
-
-
 #Procfile
 puts 'Creating Procfile'
 file 'Procfile',<<-CODE
@@ -140,8 +135,9 @@ after_bundle do
     end
   end
 
+  puts 'Installing Figaro'
   run 'figaro install'
-  
+
 #Heroku
   if get('Would you like to create a new Heroku repo?')
       run('heroku create')
