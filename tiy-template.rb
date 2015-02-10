@@ -25,7 +25,11 @@ gem_group :test, :development do
 end
 
 if get('Would you like to use either Bootstrap or Bourbon?')
-  ask("What would you like to use?", :limited_to => ['bootstrap','bourbon'])
+  ask("What would you like to use?", :limited_to => ['bootstrap','bourbon','none'])
+  response = ask
+  require 'pry'
+  binding.pry
+  
   if 'bootstrap'
       gem 'bootstrap-sass'
 
