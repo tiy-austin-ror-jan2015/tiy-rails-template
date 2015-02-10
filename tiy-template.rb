@@ -65,7 +65,7 @@ if get('Would you like to use either Bootstrap or Bourbon?')
         puts 'Adding bootstrap-sprockets to require'
 
 
-    else
+    elsif false
 
       gem 'bourbon'
       gem 'neat'
@@ -108,6 +108,8 @@ if get('Would you like to use either Bootstrap or Bourbon?')
       @import "tables";
       @import "typography";
       CODE
+    else
+      "Whatever"
     end
   end
 end
