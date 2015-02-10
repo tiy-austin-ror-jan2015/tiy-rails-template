@@ -27,17 +27,6 @@ end
 if get('Would you like to use either Bootstrap or Bourbon?')
   ask("What would you like to use?", :limited_to => ['bootstrap','bourbon','none'])
   if 'bootstrap'
-    bootstrap
-  elsif 'bourbon'
-    bourbon
-  else
-    'Nevermind then.'
-  end
-end
-
-def bootstrap
-
-    if get('Would you like to use Bootstrap?')
       gem 'bootstrap-sass'
 
         if get('Would you like to use Simple Form?')
@@ -73,12 +62,10 @@ def bootstrap
       CODE
 
       puts 'Adding bootstrap-sprockets to require'
-    end
-end
 
-def bourbon
 
-  if get('Would you like to use Bourbon?')
+  elsif 'bourbon'
+
     gem 'bourbon'
     gem 'neat'
     gem 'bitters'
@@ -120,9 +107,13 @@ def bourbon
     @import "tables";
     @import "typography";
     CODE
+
+  else
+    'Nevermind then.'
   end
 
 end
+
 
 after_bundle do
   if get('Would you like to create a new git repo and add everything to it?')
