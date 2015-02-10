@@ -24,10 +24,12 @@ gem_group :test, :development do
   end
 end
 
-ask('Would you like to use either Bootstrap or Bourbon?')
-  if 'bootstrap'
+if get('Would you like to use either Bootstrap or Bourbon?')
+  puts "What would you like to use?"
+  user_input = gets.chomp
+  if user_input.downcase == 'bootstrap'
     bootstrap
-  elsif 'bourbon'
+  elsif user_input.downcase == 'bourbon'
     bourbon
   else
     'Nevermind then.'
@@ -36,43 +38,43 @@ end
 
 def bootstrap
 
-  if get('Would you like to use Bootstrap?')
-    gem 'bootstrap-sass'
+    if get('Would you like to use Bootstrap?')
+      gem 'bootstrap-sass'
 
-      if get('Would you like to use Simple Form?')
-        gem 'simple_form'
-        generate('simple_form:install --bootstrap')
-      end
+        if get('Would you like to use Simple Form?')
+          gem 'simple_form'
+          generate('simple_form:install --bootstrap')
+        end
 
-    puts 'Creating application.scss'
+      puts 'Creating application.scss'
 
-    file 'app/assets/stylesheets/application.scss', <<-CODE
-    @import 'bootstrap-sprockets';
-    @import 'bootstrap';
-    CODE
+      file 'app/assets/stylesheets/application.scss', <<-CODE
+      @import 'bootstrap-sprockets';
+      @import 'bootstrap';
+      CODE
 
-    puts 'Linking to bootstrap files'
+      puts 'Linking to bootstrap files'
 
-    run 'rm app/assets/stylesheets/application.css'
+      run 'rm app/assets/stylesheets/application.css'
 
-    puts 'Removing old application.css file'
+      puts 'Removing old application.css file'
 
-    puts 'Removing old application.js file'
+      puts 'Removing old application.js file'
 
-    run 'rm app/assets/javascripts/application.js'
+      run 'rm app/assets/javascripts/application.js'
 
-    puts 'Creating application.js'
+      puts 'Creating application.js'
 
-    file 'app/assets/javascripts/application.js', <<-CODE
-    //= require jquery
-    //= require bootstrap-sprockets
-    //= require jquery_ujs
-    //= require turbolinks
-    //= require_tree .
-    CODE
+      file 'app/assets/javascripts/application.js', <<-CODE
+      //= require jquery
+      //= require bootstrap-sprockets
+      //= require jquery_ujs
+      //= require turbolinks
+      //= require_tree .
+      CODE
 
-    puts 'Adding bootstrap-sprockets to require'
-  end
+      puts 'Adding bootstrap-sprockets to require'
+    end
 end
 
 def bourbon
