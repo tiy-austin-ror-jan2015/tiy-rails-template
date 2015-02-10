@@ -108,7 +108,7 @@ if get('Would you like to use either Bootstrap or Bourbon?')
     @import "typography";
     CODE
 
-  else
+  else 'none'
     'Nevermind then.'
   end
 
