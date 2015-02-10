@@ -139,7 +139,7 @@ after_bundle do
   end
 
   puts 'Running Devise Generator'
-  generate('devise:install')
+  generate(devise:install)
 
   puts 'Installing Figaro'
   run('figaro install')
