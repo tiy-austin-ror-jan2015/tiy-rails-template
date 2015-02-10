@@ -108,7 +108,7 @@ if get('Would you like to use either Bootstrap or Bourbon?')
       @import "tables";
       @import "typography";
       CODE
-
+    end
   end
 end
 
