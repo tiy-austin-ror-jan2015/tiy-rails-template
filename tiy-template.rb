@@ -25,11 +25,10 @@ gem_group :test, :development do
 end
 
 if get('Would you like to use either Bootstrap or Bourbon?')
-  puts "What would you like to use?"
-  user_input = gets.chomp
-  if user_input.downcase == 'bootstrap'
+  ask("What would you like to use?")
+  if ask.downcase == 'bootstrap'
     bootstrap
-  elsif user_input.downcase == 'bourbon'
+  elsif ask.downcase == 'bourbon'
     bourbon
   else
     'Nevermind then.'
