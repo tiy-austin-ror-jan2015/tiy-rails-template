@@ -1,8 +1,7 @@
-VERSION = 'v1.3.0'
+VERSION = 'v1.4.0'
 def get(prompt)
   yes?(prompt + ' (y/n) >')
 end
-
 
 #heroku gems
 gem 'puma'
@@ -25,89 +24,104 @@ gem_group :test, :development do
   end
 end
 
-if get('Would you like to use Bootstrap?')
-  gem 'bootstrap-sass'
+ask('Would you like to use either Bootstrap or Bourbon?')
+  if 'bootstrap'
+    bootstrap
+  elsif 'bourbon'
+    bourbon
+  else
+    'Nevermind then.'
+  end
+end
 
+def bootstrap
+
+  if get('Would you like to use Bootstrap?')
+    gem 'bootstrap-sass'
+
+      if get('Would you like to use Simple Form?')
+        gem 'simple_form'
+        generate('simple_form:install --bootstrap')
+      end
+
+    puts 'Creating application.scss'
+
+    file 'app/assets/stylesheets/application.scss', <<-CODE
+    @import 'bootstrap-sprockets';
+    @import 'bootstrap';
+    CODE
+
+    puts 'Linking to bootstrap files'
+
+    run 'rm app/assets/stylesheets/application.css'
+
+    puts 'Removing old application.css file'
+
+    puts 'Removing old application.js file'
+
+    run 'rm app/assets/javascripts/application.js'
+
+    puts 'Creating application.js'
+
+    file 'app/assets/javascripts/application.js', <<-CODE
+    //= require jquery
+    //= require bootstrap-sprockets
+    //= require jquery_ujs
+    //= require turbolinks
+    //= require_tree .
+    CODE
+
+    puts 'Adding bootstrap-sprockets to require'
+  end
+end
+
+def bourbon
+
+  if get('Would you like to use Bourbon?')
+    gem 'bourbon'
+    gem 'neat'
+    gem 'bitters'
     if get('Would you like to use Simple Form?')
       gem 'simple_form'
-      generate('simple_form:install --bootstrap')
+      generate('simple_form:install')
     end
 
-  puts 'Creating application.scss'
+    puts 'Creating application.scss'
 
-  file 'app/assets/stylesheets/application.scss', <<-CODE
-  @import 'bootstrap-sprockets';
-  @import 'bootstrap';
-  CODE
+    file 'app/assets/stylesheets/application.scss', <<-CODE
+    @import 'bourbon';
+    @import 'base/base';
+    @import 'neat';
+    CODE
 
-  puts 'Linking to bootstrap files'
+    puts 'Removing old application.css'
 
-  run 'rm app/assets/stylesheets/application.css'
+    run 'rm app/assets/stylesheets/application.css'
 
-  puts 'Removing old application.css file'
+    puts 'Installing Bitters library'
 
-  puts 'Removing old application.js file'
+    inside('app/assets/stylesheets') do
+      run('bitters install')
+    end
 
-  run 'rm app/assets/javascripts/application.js'
+    puts 'Removing old _base.scss'
 
-  puts 'Creating application.js'
+    run 'rm app/assets/stylesheets/base/_base.scss'
 
-  file 'app/assets/javascripts/application.js', <<-CODE
-  //= require jquery
-  //= require bootstrap-sprockets
-  //= require jquery_ujs
-  //= require turbolinks
-  //= require_tree .
-  CODE
+    puts 'Creating _base.scss'
 
-  puts 'Adding bootstrap-sprockets to require'
-end
-
-
-if get('Would you like to use Bourbon?')
-  gem 'bourbon'
-  gem 'neat'
-  gem 'bitters'
-  if get('Would you like to use Simple Form?')
-    gem 'simple_form'
-    generate('simple_form:install')
+    file 'app/assets/stylesheets/base/_base.scss', <<-CODE
+    @import "variables";
+    @import "grid-settings";
+    @import "buttons";
+    @import "forms";
+    @import "lists";
+    @import "tables";
+    @import "typography";
+    CODE
   end
 
-  puts 'Creating application.scss'
-
-  file 'app/assets/stylesheets/application.scss', <<-CODE
-  @import 'bourbon';
-  @import 'base/base';
-  @import 'neat';
-  CODE
-
-  puts 'Removing old application.css'
-
-  run 'rm app/assets/stylesheets/application.css'
-
-  puts 'Installing Bitters library'
-
-  inside('app/assets/stylesheets') do
-    run('bitters install')
-  end
-
-  puts 'Removing old _base.scss'
-
-  run 'rm app/assets/stylesheets/base/_base.scss'
-
-  puts 'Creating _base.scss'
-
-  file 'app/assets/stylesheets/base/_base.scss', <<-CODE
-  @import "variables";
-  @import "grid-settings";
-  @import "buttons";
-  @import "forms";
-  @import "lists";
-  @import "tables";
-  @import "typography";
-  CODE
 end
-
 
 after_bundle do
   if get('Would you like to create a new git repo and add everything to it?')
@@ -128,15 +142,15 @@ after_bundle do
       end
     end
   end
+
   if get('Would you like to create a new Heroku repo?')
       run('heroku create')
-  end
 
+    if get('Would you like to push your repo to Heroku')
+        git push: 'heroku master'
+        run('heroku run rake db:migrate')
+    end
 
-
-  if get('Would you like to push your repo to Heroku')
-      git push: 'heroku master'
-      run('heroku run rake db:migrate')
   end
 
 
