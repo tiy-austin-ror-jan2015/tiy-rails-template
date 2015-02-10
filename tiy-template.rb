@@ -8,13 +8,21 @@ gem 'puma'
 gem 'rails_12factor'
 #
 
+#Figaro
+gem 'figaro'
 
+puts 'Installing Figaro'
+
+run 'figaro install'
+
+
+#Procfile
 puts 'Creating Procfile'
 file 'Procfile',<<-CODE
   web: bundle exec puma -t 5:5 -p ${PORT:-3000} -e ${RACK_ENV:-development}
 CODE
 
-
+#Non production gems
 gem_group :test, :development do
   gem 'faker'
 
@@ -23,6 +31,8 @@ gem_group :test, :development do
     gem 'binding_of_caller'
   end
 end
+
+#Bootstrap or Bourbon?
 
 if get('Would you like to use either Bootstrap or Bourbon?')
   if yes?('Use Bootstrap?')
@@ -67,7 +77,7 @@ if get('Would you like to use either Bootstrap or Bourbon?')
     gem 'bourbon'
     gem 'neat'
     gem 'bitters'
-    
+
     if get('Would you like to use Simple Form?')
       gem 'simple_form'
       generate('simple_form:install')
@@ -109,7 +119,7 @@ if get('Would you like to use either Bootstrap or Bourbon?')
   end
 end
 
-
+#Bundle
 after_bundle do
   if get('Would you like to create a new git repo and add everything to it?')
     git :init
@@ -130,6 +140,7 @@ after_bundle do
     end
   end
 
+#Heroku
   if get('Would you like to create a new Heroku repo?')
       run('heroku create')
 
@@ -142,6 +153,8 @@ after_bundle do
 
 
   rake('db:create') if get('Would you like to create your db with `rake db:create`')
-  yes?('Complete! Your new rails app is finished and ready to go')
+  yes?('Remember to declare your ruby version in your gem file.')
+  yes?('You need to run the command figaro heroku:set -e production, when using heroku.')
+  yes?('Complete! Your new rails app is finished and ready to go!')
 end
 
