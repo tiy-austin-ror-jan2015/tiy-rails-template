@@ -13,7 +13,7 @@ gem 'figaro'
 
 puts 'Installing Figaro'
 
-run 'figaro install'
+
 
 
 #Procfile
@@ -140,6 +140,8 @@ after_bundle do
     end
   end
 
+  run 'figaro install'
+  
 #Heroku
   if get('Would you like to create a new Heroku repo?')
       run('heroku create')
