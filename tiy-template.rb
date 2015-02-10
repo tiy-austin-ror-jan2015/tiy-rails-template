@@ -26,9 +26,9 @@ end
 
 if get('Would you like to use either Bootstrap or Bourbon?')
   ask("What would you like to use?", :limited_to => ['bootstrap','bourbon','none'])
-  if response == 'bootstrap'
+  if 'bootstrap'
     bootstrap
-  elsif response == 'bourbon'
+  elsif 'bourbon'
     bourbon
   else
     'Nevermind then.'
