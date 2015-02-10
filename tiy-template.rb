@@ -25,7 +25,7 @@ gem_group :test, :development do
 end
 
 if get('Would you like to use either Bootstrap or Bourbon?')
-  if get('Use Bootstrap?')
+  if yes?('Use Bootstrap?')
 
     if true
         gem 'bootstrap-sass'
