@@ -159,7 +159,7 @@ after_bundle do
   rake('db:create') if get('Would you like to create your db with `rake db:create`')
   yes?('Remember to declare your ruby version in your gem file.')
   yes?('You need to run the command figaro heroku:set -e production, when using heroku.')
-  yes?('devise gem is installed, but you still need to run rails generate devise:install.')
+  yes?('The devise gem is installed, but you still need to run rails generate devise:install.')
   yes?('I installed the paperclip gems, you still need to do everything else.')
   yes?('Complete! Your new rails app is finished and ready to go!')
 end
