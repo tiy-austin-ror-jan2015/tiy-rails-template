@@ -1,7 +1,9 @@
-VERSION = 'v1.6.0'
+VERSION = 'v1.6.1'
 def get(prompt)
   yes?(prompt + ' (y/n) >')
 end
+
+gem 'kaminari'
 
 #heroku gems
 gem 'puma'
@@ -25,6 +27,7 @@ CODE
 #Non production gems
 gem_group :test, :development do
   gem 'faker'
+  gem 'quiet_assets'
 
   if get('Would you like to use the better errors gem?')
     gem 'better_errors'
@@ -158,8 +161,8 @@ after_bundle do
 
   rake('db:create') if get('Would you like to create your db with `rake db:create`')
   yes?('Remember to declare your ruby version in your gem file.')
-  yes?('You need to run the command figaro heroku:set -e production, when using heroku.')
-  yes?('The devise gem is installed, but you still need to run rails generate devise:install.')
+  yes?('You need to run the command `figaro heroku:set -e production`, when using heroku.')
+  yes?('The devise gem is installed, but you still need to run `rails generate devise:install`.')
   yes?('I installed the paperclip gems, you still need to do everything else.')
   yes?('Complete! Your new rails app is finished and ready to go!')
 end
