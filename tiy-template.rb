@@ -9,7 +9,7 @@ gem 'kaminari'
 gem 'puma'
 gem 'rails_12factor'
 gem 'paperclip', '~> 4.2'
-gem 'aws-sdk'
+gem 'aws-sdk', '< 2.0'
 #
 
 #Figaro
