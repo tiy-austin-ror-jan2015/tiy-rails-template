@@ -1,8 +1,9 @@
-VERSION = 'v1.6.1'
+VERSION = 'v1.7.0'
 def get(prompt)
   yes?(prompt + ' (y/n) >')
 end
 
+gem 'hirb'
 gem 'kaminari'
 
 #heroku gems
@@ -17,6 +18,9 @@ gem 'figaro'
 
 #Devise
 gem 'devise'
+
+#Active Admin
+gem 'activeadmin', github: 'activeadmin'
 
 #Procfile
 puts 'Creating Procfile'
@@ -143,9 +147,21 @@ after_bundle do
     end
   end
 
+  puts 'Stopping Spring'
+  run('spring stop')
 
   puts 'Installing Figaro'
   run('figaro install')
+
+  puts 'Installing Devise'
+  generate('devise:install')
+
+  puts 'Installing Devise Views'
+  generate('devise:views')
+
+  puts 'Installing Active Admin'
+  generate('active_admin:install')
+
 
 #Heroku
   if get('Would you like to create a new Heroku repo?')
@@ -162,7 +178,7 @@ after_bundle do
   rake('db:create') if get('Would you like to create your db with `rake db:create`')
   yes?('Remember to declare your ruby version in your gem file.')
   yes?('You need to run the command `figaro heroku:set -e production`, when using heroku.')
-  yes?('The devise gem is installed, but you still need to run `rails generate devise:install`.')
+  yes?('The devise gem is installed, but you still need to run `rails generate devise MODEL.')
   yes?('I installed the paperclip gems, you still need to do everything else.')
   yes?('Complete! Your new rails app is finished and ready to go!')
 end
