@@ -1,4 +1,4 @@
-VERSION = 'v1.7.0'
+VERSION = 'v1.8.0'
 def get(prompt)
   yes?(prompt + ' (y/n) >')
 end
@@ -28,10 +28,33 @@ file 'Procfile',<<-CODE
   web: bundle exec puma -t 5:5 -p ${PORT:-3000} -e ${RACK_ENV:-development}
 CODE
 
+#PDF_Generators
+  if get('Would you like to use PDFkit?')
+    gem 'pdfkit'
+    gem 'wkhtmltopdf-binary'
+    after_bundle do
+      inject_into_file "config/application.rb", after: "require File.expand_path('../boot', __FILE__)\n" do
+        <<-CODE
+        require 'pdfkit'
+        CODE
+      end
+
+      inject_into_file "config/application.rb", after: "class Application < Rails::Application\n" do 
+        <<-CODE
+        config.middleware.use PDFKit::Middleware
+        CODE
+      end
+
+    end
+  end
+
 #Non production gems
 gem_group :test, :development do
   gem 'faker'
   gem 'quiet_assets'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'simplecov'
 
   if get('Would you like to use the better errors gem?')
     gem 'better_errors'
@@ -147,6 +170,7 @@ after_bundle do
     end
   end
 
+
   puts 'Stopping Spring'
   run('spring stop')
 
@@ -162,6 +186,16 @@ after_bundle do
   puts 'Installing Active Admin'
   generate('active_admin:install')
 
+  puts 'Installing Rspec'
+  generate('rspec:install')
+
+  puts 'Injecting Simplecov'
+  inject_into_file "spec/spec_helper.rb", after: "# See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration\n" do
+    <<-CODE
+    require 'simplecov'
+    SimpleCov.start
+    CODE
+  end
 
 #Heroku
   if get('Would you like to create a new Heroku repo?')
