@@ -1,4 +1,4 @@
-VERSION = 'v1.9.0'
+VERSION = 'v1.9.1'
 def get(prompt)
   yes?(prompt + ' (y/n) >')
 end
@@ -24,6 +24,14 @@ if get(set_color 'Would you like to use Devise and Figaro?',:magenta)
 
     puts(set_color 'Installing Devise Views', :blue, :bold )
     generate('devise:views')
+  end
+
+  if get(set_color 'Would you like to use CanCanCan or Pundit?',:magenta)
+    if yes?('Use CanCanCan?')
+      gem 'cancancan', '~> 1.10'
+    else
+      gem 'pundit'
+    end
   end
 end
 
@@ -278,6 +286,8 @@ after_bundle do
 
   rake('db:create') if get(set_color 'Would you like to create your db with `rake db:create`', :magenta)
   yes?(set_color 'Remember to declare your ruby version in your gem file.', :red,  :bold)
+  yes?(set_color 'If using cancancan, you need to run the `rails g cancan:ability`command.', :red, :bold)
+  yes?(set_color 'If using pundit, you need to put `include Pundit` in your ApplicationController.',:red, :bold)
   yes?(set_color 'You need to run the command `figaro heroku:set -e production`, when using heroku.', :red, :bold)
   yes?(set_color 'The devise gem is installed, but you still need to run `rails generate devise MODEL.', :red, :bold)
   yes?(set_color 'I installed most of paperclip, you still need to add `has_attached_file` to your model', :red, :bold)
