@@ -2,6 +2,15 @@ TIY-Rails-Template-Generator
 
 This Generator adds this list of features to your new rails app.
 
+
+Adds Devise and Figaro
+gem 'devise'
+gem 'figaro'
+
+Adds a Choice of Pundit or CanCanCan
+gem 'cancancan'
+gem 'pundit'
+
 SQL table view in your console.
 gem 'hirb'
 
@@ -20,8 +29,7 @@ gem 'aws-sdk', '< 2.0'
 Secret key to ENV
 gem 'figaro'
 
-Authentication/Admin
-gem 'devise'
+ActiveAdmin
 gem 'activeadmin', github: 'activeadmin'
 
 PDF Generator
