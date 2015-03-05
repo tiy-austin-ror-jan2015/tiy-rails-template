@@ -1,4 +1,4 @@
-VERSION = 'v1.9.1'
+VERSION = 'v1.9.2'
 def get(prompt)
   yes?(prompt + ' (y/n) >')
 end
@@ -63,6 +63,10 @@ if get(set_color 'Would you like to use Paperclip?', :magenta)
     secret_access_key: Figaro.env.aws_secret
 
   production:
+    access_key_id: Figaro.env.aws_key
+    secret_access_key: Figaro.env.aws_secret
+
+  test:
     access_key_id: Figaro.env.aws_key
     secret_access_key: Figaro.env.aws_secret
     CODE
